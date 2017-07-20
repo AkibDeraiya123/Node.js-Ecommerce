@@ -1,10 +1,8 @@
 var express = require('express');
-var app = express();
+var router = express.Router();
+var index = require('./controller/index');
 
-var index = require('../index');
-var users = require('../users');
+router.get('/', index.index);
+router.get('/users', index.user);
 
-app.use('/', index);
-app.use('/users', users);
-
-module.exports = app;
+module.exports = router;
