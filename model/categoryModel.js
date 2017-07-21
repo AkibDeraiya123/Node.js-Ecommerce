@@ -9,7 +9,19 @@ exports.getAllCalagory = function (callback) {
 			};
 			callback(response, null);
 		} else if (rows) {
-			callback(null, rows);
+			const response = {
+				status: 1,
+				data: [],
+			};
+			
+			rows.map((title) => {
+				return response.data.push({
+					id: title.id,
+					name: title.name,
+					slug: title.slug
+				});
+			});
+			callback(null, response);
 		}
 	})
 }
