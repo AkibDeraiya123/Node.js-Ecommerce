@@ -59,7 +59,7 @@ exports.getAllSubCategory = function (mainCategorySlug, callback) {
 					callback(null, response);
 				} else {
 					const response = {
-						status: 1,
+						status: 0,
 						message: 'No Data Found',
 					};
 					callback(response, null);
@@ -67,7 +67,7 @@ exports.getAllSubCategory = function (mainCategorySlug, callback) {
 			});
 		} else {
 			const response = {
-				status: 1,
+				status: 0,
 				message: 'No Data Found',
 			};
 			callback(response, null);	
