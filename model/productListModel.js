@@ -1,7 +1,6 @@
 const db = require('../db/db');
 
 exports.getProductList = function (mainCatId, SubCatId, callback) {
-	console.log(mainCatId, SubCatId);
 	return db.query('select * from product where isdelete = ? AND isactive = ? AND main_cat = ? AND sub_cat = ?', ['0', '0', mainCatId, SubCatId], (error, rows) => {
 		if (error) {
 			const response = {
