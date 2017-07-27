@@ -17,7 +17,6 @@ router.post('/productList', Product.getProductList);
 //User
 router.post('/signUp', User.signUp);
 router.post('/logIn', User.logIn);
-
 /******** BackEnd API ********/
 
 //admin
@@ -25,6 +24,9 @@ router.post('/admin/logIn', Admin.logIn);
 // router.get('/admin/dashboard', Admin.dashboard);
 
 router.get('/admin/userList', Admin.userList);
+router.post('/admin/userList/status', Admin.changeUserStatus); // For Approve/Disapprove User
+router.delete('/admin/removeUser/:id', Admin.removeUser);
+
 
 router.get('/admin/categoryList', Admin.categoryList);
 router.post('/admin/addCategory', Admin.addCategory);

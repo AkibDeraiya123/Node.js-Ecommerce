@@ -272,6 +272,82 @@ exports.userList = function (callback) {
   })
 }
 
+exports.changeUserStatus = (id, status, callback) => {
+  let newStatus;
+  if (status === 'disapprove') {
+    newStatus = '1';
+  } else if (status === 'approve') {
+    newStatus = '0';
+  }
+
+  return db.query('select * from registration WHERE id = ?', [id], (error, rows) => {
+    if (error) {
+      const response = {
+        status: 0,
+        message: 'Something went Wrong'
+      };
+      callback(response, null);
+    } else if (rows.length > 0) { 
+      return db.query('update registration SET isactive = ? where id = ?', [newStatus, id], (error, rows) => {
+        if (error) {
+          const response = {
+            status: 0,
+            message: 'Something went wrong'
+          };
+          callback(response, null);
+        } else {
+          const response = {
+            status: 1,
+            message: 'Successfully Deleted'
+          };
+          callback(null, response);
+        }
+      })
+    } else {
+      const response = {
+        status: 0,
+        message: 'Sorry We Cann"t find user detail',
+      };
+      callback(response, null);
+    }
+  })
+}
+
+exports.removeUser = (id, callback) => {
+  return db.query('select * from registration WHERE id = ? AND isdelete = ?', [id, '0'], (error, rows) => {
+    if (error) {
+      const response = {
+        status: 0,
+        message: 'Something went Wrong'
+      };
+      callback(response, null);
+    } else if (rows.length > 0) {
+      return db.query('update registration SET isdelete = ? where id = ?', ['1', id], (error, rows) => {
+        if (error) {
+          const response = {
+            status: 0,
+            message: 'Something went wrong'
+          };
+          callback(response, null);
+        } else {
+          const response = {
+            status: 1,
+            message: 'Successfully Deleted'
+          };
+          callback(null, response);
+        }
+      })
+    } else {
+      const response = {
+        status: 0,
+        message: 'No resord found/ Allready Deleted'
+      };
+      callback(response, null);
+    }
+  });
+}
+
+
 exports.deleteMainCat = (id, callback) => {
   return db.query('select * from main_category WHERE id = ? AND isdelete = ?', [id, '0'], (error, rows) => {
     if (error) {

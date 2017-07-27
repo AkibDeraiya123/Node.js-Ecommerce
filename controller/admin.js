@@ -146,6 +146,47 @@ exports.editSubCategory = function(req, res, next) {
   }
 }
 
+exports.changeUserStatus = function(req, res, next) {
+  const id = req.body.id ? req.body.id : '';
+  const status = req.body.status ? req.body.status : '';
+
+  if (status.trim() !== '' && (id > 0 && id !== ''))  {
+    Admin.changeUserStatus(id, status, (error, response) => {
+      if (error) {
+        res.json(error);
+      } else {
+        res.status(200).json(response);
+      }
+    });
+  } else {
+    const response = {
+      status: 0,
+      message: 'All Fields are require or Not null'
+    };
+    res.json(response);
+  }
+}
+
+exports.removeUser = function(req, res, next) {
+  const id = req.params.id ? req.params.id : '';
+
+  if (id > 0 && id !== '') {
+    Admin.removeUser(id, (error, response) => {
+      if (error) {
+        res.json(error);
+      } else {
+        res.status(200).json(response);
+      }
+    });
+  } else {
+    const response = {
+      status: 0,
+      message: 'All Fields are require or Not null'
+    };
+    res.json(response);
+  }
+}
+
 exports.categoryList = function(req, res, next) {
   Admin.categoryList((error, success) => {
     if (error) {
